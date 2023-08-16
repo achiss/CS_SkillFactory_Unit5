@@ -8,16 +8,20 @@ namespace Unit5_result
     {
         private static void Main(string[] args)                     // main method
         {
+            UserData();
+            ShowUserData();
 
+            Console.ReadKey();
         }
 
-        public static string GetDataFromConsole()
+        public static string GetDataFromConsole()                   // Получение строчки 
         {
             string data = Console.ReadLine();
             
-            if(data == null)
+            if(string.IsNullOrEmpty(data))                          // ! IsNullOrEmpty() - есть ли аналоги?
             {
                 Console.WriteLine("Данные не были введены.");
+                Console.Write("Введите данные: ");
                 return GetDataFromConsole();
             }
             else
@@ -26,27 +30,45 @@ namespace Unit5_result
             }
         }
 
-        public static int GetNumberDataFromConsole()
+        public static int GetNumberDataFromConsole()                // Получение числовых значений 
         {
-            int number = int.Parse(GetDataFromConsole());
-            
-            if((number == 0) || (number < 0))
-            {
-                Console.WriteLine("Введите корректные значения (не могут быть меньше или равны 0).");
-                return GetNumberDataFromConsole();
-            }
-            else
+            int number;
+            bool CheckNumber = int.TryParse(GetDataFromConsole(), out number);
+
+            if(CheckNumber)
             {
                 return number;
             }
+            else
+            {
+                Console.WriteLine("Данные не были введены корректно.");
+                Console.Write("Введите данные: ");
+                return GetNumberDataFromConsole();
+            }
         }
 
-        public static bool CheckValueDataFromConsole()              // need to update!
+        public static void UserData()
         {
-            bool check = false;
-            return check;
+            (string Name, string Surname, int Age, string Pet, string[] PetCount, string[] FavFlowers) UserList;
+
+            Console.Write("Введите имя: ");
+            UserList.Name = GetDataFromConsole();
+            
+            Console.Write("Введите фамилию: ");
+            UserList.Surname = GetDataFromConsole();
+
+            Console.Write("Введите возраст: ");
+            UserList.Age = GetNumberDataFromConsole();
         }
 
+        public static void GetArraysUserData()
+        {
 
+        }
+
+        public static void ShowUserData()
+        {
+            Console.WriteLine($"Добрый день {}");
+        }
     }
 }
